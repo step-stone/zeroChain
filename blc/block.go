@@ -3,7 +3,6 @@ package blc
 import (
 	"bytes"
 	"crypto/sha256"
-	"fmt"
 	"strconv"
 	"time"
 )
@@ -37,7 +36,7 @@ func NewBlock(data string, prevBlockHash []byte) *Block {
 
 // 设置当前区块哈希
 func (b *Block) SetHash() {
-	fmt.Println(strconv.FormatInt(b.TimeStamp, 2))
+	//fmt.Println(strconv.FormatInt(b.TimeStamp, 2))
 	timestamp := []byte(strconv.FormatInt(b.TimeStamp, 2))
 
 	hashBytes := bytes.Join([][]byte{b.PrevBlockHash, b.Data, timestamp}, []byte{})
@@ -45,4 +44,9 @@ func (b *Block) SetHash() {
 	//计算哈希值
 	hash := sha256.Sum256(hashBytes)
 	b.Hash = hash[:]
+}
+
+// 创建Zero区块
+func NewZeroBlock() *Block {
+	return NewBlock("Zero Block", []byte{'0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'})
 }
