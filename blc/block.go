@@ -36,6 +36,10 @@ func NewBlock(data string, prevBlockHash []byte) *Block {
 
 	block.Hash = hash
 	block.Nonce = nonce
+
+	//校验区块合法性
+	//valid:=pow.Validate()
+
 	//block.SetHash()
 	return block
 }
