@@ -24,6 +24,7 @@ func main() {
 		fmt.Printf("前一个区块哈希: %x \n", block.PrevBlockHash)
 		fmt.Println("当前交易数据:", string(block.Data))
 		fmt.Printf("当前区块哈希: %x\n", block.Hash)
+		fmt.Printf("当前区块Nonce: %d\n", block.Nonce)
 	}
 
 }
