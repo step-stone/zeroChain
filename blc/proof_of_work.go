@@ -40,7 +40,6 @@ func NewProofOfWork(block *Block) *ProofOfWork {
 func (pow *ProofOfWork) Run() (int, []byte) {
 
 	var hashInt big.Int
-
 	var hash [32]byte
 	//设置难度初始值
 	nonce := 0
@@ -53,9 +52,7 @@ func (pow *ProofOfWork) Run() (int, []byte) {
 
 		// \r 表示控制台只输出一条信息
 		fmt.Printf("\r%x", hash)
-
 		hashInt.SetBytes(hash[:])
-
 		//如果当前大数值 小于 pow中存储的大数值 则表示哈希是正确的
 		//否则 nonce ++
 		if hashInt.Cmp(pow.target) == -1 {
@@ -84,8 +81,8 @@ func (pow *ProofOfWork) Validate() bool {
 
 	data := pow.prepareData(pow.block.Nonce)
 	hash := sha256.Sum256(data)
-	hashInt.SetBytes(hash[:])
 
+	hashInt.SetBytes(hash[:])
 	isValid := hashInt.Cmp(pow.target) == -1
 
 	return isValid
