@@ -3,6 +3,8 @@ package blc
 import (
 	"bytes"
 	"crypto/sha256"
+	"encoding/gob"
+	"log"
 	"strconv"
 	"time"
 )
@@ -59,4 +61,27 @@ func (b *Block) SetHash() {
 // 创建Zero区块
 func NewZeroBlock() *Block {
 	return NewBlock("Zero Block", []byte{'0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'})
+}
+
+// 序列化
+func (b *Block) Serialize() []byte {
+	var result bytes.Buffer
+	encoder := gob.NewEncoder(&result)
+	err := encoder.Encode(b)
+	if err != nil {
+		log.Panic(err)
+	}
+	return result.Bytes()
+}
+
+//反序列化
+func Deserialize(b []byte) *Block {
+	var block Block
+
+	decoder := gob.NewDecoder(bytes.NewReader(b))
+	err := decoder.Decode(&block)
+	if err != nil {
+		log.Panic(err)
+	}
+	return &block
 }
