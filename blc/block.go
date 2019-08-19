@@ -21,16 +21,22 @@ type Block struct {
 
 	//当前区块hash
 	Hash []byte
+
+	//Nonce随机数 挖矿难度值
+	Nonce int
 }
 
 //创建新的区块
 func NewBlock(data string, prevBlockHash []byte) *Block {
-	block := &Block{time.Now().Unix(),
-		prevBlockHash,
-		[]byte(data),
-		[]byte{}}
+	block := &Block{time.Now().Unix(), prevBlockHash, []byte(data), []byte{}, 0}
+	pow := NewProofOfWork(block)
 
-	block.SetHash()
+	//通过工作量证明 设置区块的哈希 以及nonce值
+	nonce, hash := pow.Run()
+
+	block.Hash = hash
+	block.Nonce = nonce
+	//block.SetHash()
 	return block
 }
 
